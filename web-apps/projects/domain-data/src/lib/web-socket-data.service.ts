@@ -34,6 +34,7 @@ export class WebSocketDataService {
 
   sendMessage(msg: any) {
     if (this.socket$){
+      console.log('Sending message through websocket: ' + JSON.stringify(msg))
       this.socket$.next(msg);
     } else {
       console.log('Not connected to websocket');

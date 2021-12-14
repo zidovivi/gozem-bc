@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "NODE_ENV=production ng build",
+    "build": "ng build admin && ng build tracker && ng build driver",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
