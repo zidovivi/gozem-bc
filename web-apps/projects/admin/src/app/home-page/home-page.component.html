@@ -1,0 +1,114 @@
+<h1 style="margin: 2rem 0; text-align: center;  font-size: 4rem; font-weight: bold;">
+  Dashboard
+</h1>
+<div class="" id="packages-container">
+  <h3 style="margin: 2rem 0; text-align: center; font-size: 2rem; font-weight: bold;">
+    Packages
+  </h3>
+
+  <div class="my-4">
+    <a mat-raised-button color="primary" routerLink="/packages/new">Create Package</a>
+  </div>
+  <div id="packages">
+    <div class="flex flex-col">
+      <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+          <div class="overflow-hidden sm:rounded-lg shadow-md">
+            <table class="min-w-full">
+              <thead class="bg-gray-50">
+              <tr>
+                <th scope="col" class="text-xs font-medium text-gray-700 px-4 py-3 text-left uppercase tracking-wider">
+                  Package ID
+                </th>
+                <th scope="col" class="text-xs font-medium text-gray-700 px-4 py-3 text-left uppercase tracking-wider">
+                  Description
+                </th>
+                <th scope="col" class="text-xs font-medium text-gray-700 px-4 py-3 text-left uppercase tracking-wider">
+                  Specifications
+                </th>
+                <th scope="col" class="text-xs font-medium text-gray-700 px-4 py-3 text-left uppercase tracking-wider">
+                  From
+                </th>
+                <th scope="col" class="text-xs font-medium text-gray-700 px-4 py-3 text-left uppercase tracking-wider">
+                  To
+                </th>
+                <th scope="col" class="text-xs font-medium text-gray-700 px-4 py-3 text-left uppercase tracking-wider">
+                  Active Delivery
+                </th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let pkg of packages" class="bg-white border-b">
+                <td class="px-4 py-4 whitespace-nowrap">{{pkg.package_id}}</td>
+                <td class="px-4 py-4 whitespace-nowrap">{{pkg.description}}</td>
+                <td class="px-4 py-4 whitespace-nowrap">
+                  Weight: {{pkg.weight}}<br>
+                  Width: {{pkg.width}}<br>
+                  Height: {{pkg.height}}<br>
+                  Depth: {{pkg.depth}}<br>
+                </td>
+                <td class="px-4 py-4 whitespace-nowrap">
+                  {{pkg.from_name}}<br>
+                  Address: {{pkg.from_address}}<br>
+                  Location: [{{pkg.from_location_lat}}, {{pkg.from_location_lng}}]<br>
+                </td>
+                <td class="px-4 py-4 whitespace-nowrap">
+                  {{pkg.to_name}}<br>
+                  Address: {{pkg.to_address}}<br>
+                  Location: [{{pkg.to_location_lat}}, {{pkg.to_location_lng}}]<br>
+                </td>
+                <td>{{pkg.active_delivery_id}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="deliveries-container">
+
+  <h3 style="margin: 2rem 0; text-align: center; font-size: 2rem; font-weight: bold;">
+    Deliveries
+  </h3>
+  <div class="py-4">
+    <a mat-raised-button color="warn" routerLink="/deliveries/new">Create Delivery</a>
+  </div>
+  <div id="deliveries">
+    <div class="flex flex-col">
+      <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+        <div class="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+          <div class="overflow-hidden sm:rounded-lg shadow-md">
+            <table class="min-w-full">
+              <thead class="bg-gray-50">
+              <tr>
+                <th scope="col" class="text-xs font-medium text-gray-700 px-4 py-3 text-left uppercase tracking-wider">Delivery ID</th>
+                <th scope="col" class="text-xs font-medium text-gray-700 px-4 py-3 text-left uppercase tracking-wider">Package ID</th>
+                <th scope="col" class="text-xs font-medium text-gray-700 px-4 py-3 text-left uppercase tracking-wider">Status</th>
+                <th scope="col" class="text-xs font-medium text-gray-700 px-4 py-3 text-left uppercase tracking-wider">Location</th>
+                <th scope="col" class="text-xs font-medium text-gray-700 px-4 py-3 text-left uppercase tracking-wider">Pickup Time</th>
+                <th scope="col" class="text-xs font-medium text-gray-700 px-4 py-3 text-left uppercase tracking-wider">Start Time</th>
+                <th scope="col" class="text-xs font-medium text-gray-700 px-4 py-3 text-left uppercase tracking-wider">End Time</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let d of deliveries">
+                <td class="px-4 py-4 whitespace-nowrap">{{d.delivery_id}}</td>
+                <td class="px-4 py-4 whitespace-nowrap">{{d.package_id}}</td>
+                <td class="px-4 py-4 whitespace-nowrap">{{d.status}}</td>
+                <td class="px-4 py-4 whitespace-nowrap">
+                  [{{d.location_lat}}, {{d.location_lng}}]<br>
+                </td>
+                <td class="px-4 py-4">{{d.pickup_time | date:'medium'}}</td>
+                <td class="px-4 py-4">{{d.start_time | date:'medium'}}</td>
+                <td class="px-4 py-4">{{d.end_time | date:'medium'}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

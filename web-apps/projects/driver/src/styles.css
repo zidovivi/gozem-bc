@@ -1,0 +1,20 @@
+/* You can add global styles to this file, and also import other style files */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.ng-valid[required], .ng-valid.required  {
+  /*border-left: 5px solid #42A948;  green */
+  /*@apply bg-green-50 border-green-500 focus:ring-green-500 focus:border-green-500*/
+  @apply border-l-4 border-0 border-green-500 focus:ring-green-500 focus:border-green-500
+
+}
+
+.ng-invalid:not(form)  {
+  @apply border-l-4 border-0 bg-red-50 border-red-500 focus:ring-red-500 focus:border-red-500
+  /*border-left: 5px solid #a94442;  red */
+}

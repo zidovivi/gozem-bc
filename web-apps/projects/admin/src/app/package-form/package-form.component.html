@@ -1,0 +1,135 @@
+<h1>Package Form</h1>
+<form #packageForm="ngForm" (ngSubmit)="onSubmit()" class="w-2/3">
+  <div class="mb-6">
+    <label for="description" class="text-sm font-medium text-gray-900 block mb-2">Description</label>
+    <input type="text" id="description" name="description" [(ngModel)]="model.description" #description="ngModel"
+           placeholder="Description" required
+           class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+    <p [hidden]="description.valid || description.pristine" class="mt-2 text-sm text-red-600"><span class="font-medium">Oops!</span>
+      Description is required!</p>
+  </div>
+  <div class="mb-6">
+    <label for="weight" class="text-sm font-medium text-gray-900 block mb-2">Weight(Kg)</label>
+    <input type="number" id="weight" name="weight" [(ngModel)]="model.weight" #weight="ngModel" placeholder="Weight"
+           required
+           class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+    <p [hidden]="weight.valid || weight.pristine" class="mt-2 text-sm text-red-600"><span
+      class="font-medium">Oops!</span> Weight is required!</p>
+  </div>
+  <div class="flex">
+    <div class="mb-6 w-1/3">
+      <label for="width" class="text-sm font-medium text-gray-900 block mb-2">Width(cm)</label>
+      <input type="number" id="width" name="width" [(ngModel)]="model.width" #width="ngModel" placeholder="Width"
+             required
+             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+      <p [hidden]="width.valid || width.pristine" class="mt-2 text-sm text-red-600"><span
+        class="font-medium">Oops!</span>
+        Width is required!</p>
+    </div>
+    <div class="mb-6 w-1/3 mx-3">
+      <label for="height" class="text-sm font-medium text-gray-900 block mb-2">Height(cm)</label>
+      <input type="number" id="height" name="height" [(ngModel)]="model.height" #height="ngModel" placeholder="Height"
+             required
+             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+      <p [hidden]="height.valid || height.pristine" class="mt-2 text-sm text-red-600"><span
+        class="font-medium">Oops!</span> Height is required!</p>
+    </div>
+    <div class="mb-6 w-1/3">
+      <label for="depth" class="text-sm font-medium text-gray-900 block mb-2">Depth(cm)</label>
+      <input type="number" id="depth" name="depth" [(ngModel)]="model.depth" #depth="ngModel" placeholder="Depth"
+             required
+             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+      <p [hidden]="depth.valid || depth.pristine" class="mt-2 text-sm text-red-600"><span
+        class="font-medium">Oops!</span>
+        Depth is required!</p>
+    </div>
+  </div>
+  <div class="mb-6">
+    <label for="from_name" class="text-sm font-medium text-gray-900 block mb-2">Sender Name</label>
+    <input type="text" id="from_name" name="from_name" [(ngModel)]="model.from_name" #from_name="ngModel"
+           placeholder="From" required
+           class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+    <p [hidden]="from_name.valid || from_name.pristine" class="mt-2 text-sm text-red-600"><span class="font-medium">Oops!</span>
+      Sender Name is required!</p>
+  </div>
+  <div class="mb-6">
+    <label for="from_address" class="text-sm font-medium text-gray-900 block mb-2">Sender Address</label>
+    <input type="text" id="from_address" name="from_address" [(ngModel)]="model.from_address" #from_address="ngModel"
+           placeholder="Address" required
+           class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+    <p [hidden]="from_address.valid || from_address.pristine" class="mt-2 text-sm text-red-600"><span
+      class="font-medium">Oops!</span> Sender Address is required!</p>
+  </div>
+  <div class="flex">
+    <div class="mb-6 mr-2 w-1/2">
+      <label for="from_location_lat" class="text-sm font-medium text-gray-900 block mb-2">Sender Location Lat</label>
+      <input type="number" id="from_location_lat" name="from_location_lat" [(ngModel)]="model.from_location_lat"
+             #from_location_lat="ngModel" required placeholder="Lat"
+             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+      <p [hidden]="from_location_lat.valid || from_location_lat.pristine" class="mt-2 text-sm text-red-600"><span
+        class="font-medium">Oops!</span>
+        Sender latitude is required!</p>
+    </div>
+    <div class="mb-6 ml-2 w-1/2">
+      <label for="from_location_lng" class="text-sm font-medium text-gray-900 block mb-2">Sender Location Lng</label>
+      <input type="number" id="from_location_lng" name="from_location_lng" [(ngModel)]="model.from_location_lng"
+             #from_location_lng="ngModel" required placeholder="Lng"
+             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+      <p [hidden]="from_location_lng.valid || from_location_lng.pristine" class="mt-2 text-sm text-red-600"><span
+        class="font-medium">Oops!</span>
+        Sender longitude is required!</p>
+    </div>
+  </div>
+
+  <div class="mb-6">
+    <label for="to_name" class="text-sm font-medium text-gray-900 block mb-2">Recipient Name</label>
+    <input type="text" id="to_name" name="to_name" [(ngModel)]="model.to_name" #to_name="ngModel" placeholder="To"
+           required
+           class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+    <p [hidden]="to_name.valid || to_name.pristine" class="mt-2 text-sm text-red-600"><span
+      class="font-medium">Oops!</span> Recipient Name is required!</p>
+  </div>
+  <div class="mb-6">
+    <label for="to_address" class="text-sm font-medium text-gray-900 block mb-2">Recipient Address</label>
+    <input type="text" id="to_address" name="to_address" [(ngModel)]="model.to_address" #to_address="ngModel"
+           placeholder="Address" required
+           class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+    <p [hidden]="to_address.valid || to_address.pristine" class="mt-2 text-sm text-red-600"><span class="font-medium">Oops!</span>
+      Recipient Address is required!</p>
+  </div>
+
+  <div class="flex">
+    <div class="mb-6 mr-2 w-1/2">
+      <label for="to_location_lat" class="text-sm font-medium text-gray-900 block mb-2">To Location Lat</label>
+      <input type="number" id="to_location_lat" name="to_location_lat" [(ngModel)]="model.to_location_lat"
+             #to_location_lat="ngModel" required placeholder="Lat"
+             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+      <p [hidden]="to_location_lat.valid || to_location_lat.pristine" class="mt-2 text-sm text-red-600"><span
+        class="font-medium">Oops!</span>
+        Recipient latitude is required!</p>
+    </div>
+    <div class="mb-6 ml-2 w-1/2">
+      <label for="to_location_lng" class="text-sm font-medium text-gray-900 block mb-2">Recipient Location Lng</label>
+      <input type="number" id="to_location_lng" name="to_location_lng" [(ngModel)]="model.to_location_lng"
+             #to_location_lng="ngModel" required placeholder="Lng"
+             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+      <p [hidden]="to_location_lng.valid || to_location_lng.pristine" class="mt-2 text-sm text-red-600"><span
+        class="font-medium">Oops!</span>
+        Recipient longitude is required!</p>
+    </div>
+  </div>
+
+
+  <button type="submit" [disabled]="!packageForm.form.valid"
+          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+    Submit
+  </button>
+  <button (click)="newPackage(); packageForm.reset()" type="button"
+          class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mx-2.5">
+    Reset
+  </button>
+  <!--<button type="button"
+          class="rounded-lg border border-gray-200 bg-white text-sm font-medium px-4 py-2 text-gray-900 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 mr-3 mb-3">
+    Reset
+  </button>-->
+</form>

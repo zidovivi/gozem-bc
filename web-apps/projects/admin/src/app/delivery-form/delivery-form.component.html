@@ -1,0 +1,52 @@
+<h1>Delivery Form</h1>
+<div *ngIf="packages">
+  <form #deliveryForm="ngForm" (ngSubmit)="onSubmit()" class="w-2/3">
+    <div class="mb-6">
+      <label for="package_id" class="text-sm font-medium text-gray-900 block mb-2">Package</label>
+      <select
+        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        id="package_id" required
+        [(ngModel)]="package_id" name="package_id_form" #package_id_form="ngModel">
+        <option *ngFor="let pkg of packages" [value]="pkg.package_id">{{pkg.package_id}}
+          - {{pkg.description | slice:0:60}}</option>
+      </select>
+      <p [hidden]="package_id_form.valid || package_id_form.pristine" class="mt-2 text-sm text-red-600"><span
+        class="font-medium">Oops!</span>
+        Please select a package!</p>
+    </div>
+
+    <!--<div class="flex">
+      <div class="mb-6 mr-2 w-1/2">
+        <label for="location_lat" class="text-sm font-medium text-gray-900 block mb-2">Location Lat</label>
+        <input type="number" id="location_lat" name="location_lat" [(ngModel)]="model.location_lat"
+               #location_lat="ngModel" required placeholder="Lat"
+               class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+        <p [hidden]="location_lat.valid || location_lat.pristine" class="mt-2 text-sm text-red-600"><span
+          class="font-medium">Oops!</span>
+          Latitude is required!</p>
+      </div>
+      <div class="mb-6 ml-2 w-1/2">
+        <label for="location_lng" class="text-sm font-medium text-gray-900 block mb-2">Location Lng</label>
+        <input type="number" id="location_lng" name="location_lng" [(ngModel)]="model.location_lng"
+               #location_lng="ngModel" required placeholder="Lng"
+               class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+        <p [hidden]="location_lng.valid || location_lng.pristine" class="mt-2 text-sm text-red-600"><span
+          class="font-medium">Oops!</span>
+          Longitude is required!</p>
+      </div>
+    </div>-->
+    <button [disabled]="!deliveryForm.form.valid" type="submit"
+            class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+      Submit
+    </button>
+    <button (click)="newDelivery(); deliveryForm.reset()" type="button"
+            class="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mx-2.5">
+      Reset
+    </button>
+
+  </form>
+
+</div>
+<div *ngIf="!packages">
+  <h4 class="text-red-500">No Packages. Please add a package to create a delivery.</h4>
+</div>

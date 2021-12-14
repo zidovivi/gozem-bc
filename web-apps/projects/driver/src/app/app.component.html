@@ -1,0 +1,83 @@
+<div class="mx-2 my-2 space-y-4">
+  <div id="search">
+    <form #searchDeliveryForm="ngForm" (ngSubmit)="onSubmit()">
+      <div class=" flex flex-row space-x-2 w-3/4">
+        <div class="w-2/3">
+          <input type="text" id="delivery_id_form"
+                 class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+                 placeholder="Enter Delivery ID"
+                 name="delivery_id_form"
+                 [(ngModel)]="deliveryId"
+                 #delivery_id_form="ngModel">
+        </div>
+        <button [disabled]="!searchDeliveryForm.form.valid" type="submit"
+                class="w-1/3 text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+          Submit
+        </button>
+      </div>
+    </form>
+
+  </div>
+  <div *ngIf="delivery" id="details-controls" class="flex flex-row w-full space-x-2.5">
+    <div id="package-delivery-details" class="w-1/4 space-y-4">
+      <div id="package-details" *ngIf="package">
+        <h2 class="text-xl font-bold">Package Details</h2>
+        <p>
+          <span class="text-gray-500">ID:</span> {{package.package_id}} <br>
+          <span class="text-gray-500">Description:</span> {{package.description}} <br>
+          <span class="text-gray-500">Weight:</span> {{package.weight}} Kg <br>
+          <span class="text-gray-500">Width:</span> {{package.width}} cm <br>
+          <span class="text-gray-500">Height:</span> {{package.height}} cm <br>
+          <span class="text-gray-500">Depth:</span> {{package.depth}} cm <br>
+          <span class="text-gray-500">Sender Name:</span> {{package.from_name}} <br>
+          <span class="text-gray-500">Sender Address:</span> {{package.from_address}} <br>
+          <span class="text-gray-500">Recipient Name:</span> {{package.to_name}} <br>
+          <span class="text-gray-500">Recipient Address:</span> {{package.to_address}} <br>
+        </p>
+      </div>
+      <div id="delivery-details">
+        <h2 class="text-xl font-bold">Delivery Details</h2>
+        <p>
+          <span class="text-gray-500">ID:</span> {{delivery.delivery_id}} <br>
+          <span class="text-gray-500">Pickup Time:</span> {{delivery.pickup_time | date:'medium'}} <br>
+          <span class="text-gray-500">Start Time:</span> {{delivery.start_time | date:'medium'}} <br>
+          <span class="text-gray-500">End Time:</span> {{delivery.end_time | date:'medium'}} <br>
+          <span class="text-gray-500">Status:</span> {{delivery.status}} <br>
+
+        </p>
+      </div>
+    </div>
+    <div id="map" class="w-2/4">
+      <google-map height="500px"
+                  width="100%"
+                  [center]="mapCenter">
+        <map-marker
+          *ngFor="let marker of mapMarkers"
+
+          [options]="marker"
+        ></map-marker>
+      </google-map>
+    </div>
+    <div id="status-controls" class="w-1/4 flex flex-col space-y-2.5">
+      <button (click)="onStatusChanged('picked-up')" [disabled]="!pickedUpButtonEnabled" type="button"
+              class="disabled:cursor-not-allowed text-white bg-blue-500 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-3 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+        Picked Up
+      </button>
+      <button (click)="onStatusChanged('in-transit')" [disabled]="!inTransitButtonEnabled" type="button"
+              class="disabled:cursor-not-allowed text-white bg-yellow-600 hover:bg-yellow-700 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-base px-5 py-3 text-center dark:bg-yellow-600 dark:hover:bg-yellow-700 dark:focus:ring-yellow-800">
+        In-Transit
+      </button>
+      <button (click)="onStatusChanged('delivered')" [disabled]="!deliveredButtonEnabled" type="button"
+              class="disabled:cursor-not-allowed text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-base px-5 py-3 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+        Delivered
+      </button>
+      <button (click)="onStatusChanged('failed')" [disabled]="!failedButtonEnabled" type="button"
+              class="disabled:cursor-not-allowed text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-base px-5 py-3 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+        Failed
+      </button>
+    </div>
+  </div>
+  <div *ngIf="formSubmitted && !delivery">
+    <h4 class="text-red-500">No Delivery found. Please enter a valid delivery.</h4>
+  </div>
+</div>
