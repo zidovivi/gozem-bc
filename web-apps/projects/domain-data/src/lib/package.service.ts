@@ -7,7 +7,7 @@ import {catchError, map, Observable, of} from "rxjs";
   providedIn: 'root'
 })
 export class PackageService {
-  private apiUrl = "http://localhost:3000/api/package";
+  private apiUrl = "https://gozem-bc.herokuapp.com/api/package";
 
   constructor(private http: HttpClient) {
   }
