@@ -106,10 +106,10 @@ module.exports = function(expressServer) {
     channelRegistrations.any=[];
     websocketServer.on('connection', (webSocketClient, connectionRequest) => {
         //send feedback to the incoming connection
-        const [_path, params] = connectionRequest?.url?.split("?");
-        const connectionParams = queryString.parse(params);
+        //const [_path, params] = connectionRequest?.url?.split("?");
+        //const connectionParams = queryString.parse(params);
 
-        console.log(connectionParams);
+        //console.log(connectionParams);
         webSocketClient.send('{ "connection" : "ok"}');
 
         webSocketClient.on('message', (message) => {

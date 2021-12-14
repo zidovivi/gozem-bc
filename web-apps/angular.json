@@ -28,9 +28,13 @@
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "./node_modules/tailwindcss/dist/base.css",
+              "./node_modules/tailwindcss/dist/utilities.css",
+              "./node_modules/tailwindcss/dist/components.css",
               "projects/admin/src/styles.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "baseHref": "/admin/"
           },
           "configurations": {
             "production": {
@@ -38,7 +42,7 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -52,7 +56,8 @@
                   "with": "projects/admin/src/environments/environment.prod.ts"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "optimization": true
             },
             "development": {
               "buildOptimizer": false,
@@ -130,7 +135,8 @@
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "projects/driver/src/styles.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "baseHref": "/driver/"
           },
           "configurations": {
             "production": {
@@ -138,7 +144,7 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumError": "6mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -152,7 +158,13 @@
                   "with": "projects/driver/src/environments/environment.prod.ts"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "styles": [
+                "./node_modules/tailwindcss/dist/base.css",
+                "./node_modules/tailwindcss/dist/utilities.css",
+                "./node_modules/tailwindcss/dist/components.css"
+              ],
+              "optimization": true
             },
             "development": {
               "buildOptimizer": false,
@@ -168,7 +180,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "port": 4222,
+            "port": 4222
           },
           "configurations": {
             "production": {
@@ -261,9 +273,13 @@
               "projects/tracker/src/assets"
             ],
             "styles": [
+              "./node_modules/tailwindcss/dist/base.css",
+              "./node_modules/tailwindcss/dist/utilities.css",
+              "./node_modules/tailwindcss/dist/components.css",
               "projects/tracker/src/styles.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "baseHref": "/tracker/"
           },
           "configurations": {
             "production": {
@@ -271,7 +287,7 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",

@@ -21,6 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../web-apps/dist')));
 
 app.use(/*'/api', */function(req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -33,6 +34,15 @@ app.use(/*'/api', */function(req, res, next) {
 app.use('/', indexRouter);
 app.use('/api', [packageRouter, deliveryRouter])
 
+app.get('/admin/*', function(req, res) {
+  res.sendFile('index.html', {root: '../web-apps/dist/admin/'});
+});
+app.get('/tracker/*', function(req, res) {
+  res.sendFile('index.html', {root: '../web-apps/dist/tracker/'});
+});
+app.get('/driver/*', function(req, res) {
+  res.sendFile('index.html', {root: '../web-apps/dist/driver/'});
+});
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

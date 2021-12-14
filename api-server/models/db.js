@@ -1,7 +1,9 @@
 const mongoose = require('mongoose');
-let dbURI = 'mongodb://localhost/gozem-bc';
+//let dbURI = 'mongodb://localhost/gozem-bc';
+let dbURI = 'mongodb+srv://root:root123@cluster0.reaa3.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
 if (process.env.NODE_ENV === 'production') {
-    dbURI = process.env.MONGODB_URI;
+    //dbURI = process.env.MONGODB_URI;
+    console.log('Found remote db url')
 }
 mongoose.connect(dbURI);
 

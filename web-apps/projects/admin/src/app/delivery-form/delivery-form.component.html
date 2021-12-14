@@ -1,5 +1,5 @@
 <h1>Delivery Form</h1>
-<div *ngIf="packages">
+<div *ngIf="packages && packages.length > 0">
   <form #deliveryForm="ngForm" (ngSubmit)="onSubmit()" class="w-2/3">
     <div class="mb-6">
       <label for="package_id" class="text-sm font-medium text-gray-900 block mb-2">Package</label>
@@ -47,6 +47,6 @@
   </form>
 
 </div>
-<div *ngIf="!packages">
+<div *ngIf="!packages || packages.length == 0">
   <h4 class="text-red-500">No Packages. Please add a package to create a delivery.</h4>
 </div>
