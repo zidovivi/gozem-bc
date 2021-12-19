@@ -3,7 +3,7 @@ import { EMPTY, Observable, Subject, timer } from 'rxjs';
 import { retryWhen, tap, delayWhen, switchAll, catchError } from 'rxjs/operators';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 
-export const WS_ENDPOINT = "ws://localhost:3000/websockets";
+export const WS_ENDPOINT = "wss://gozem-bc.herokuapp.com/websockets";
 export const RECONNECT_INTERVAL = 30;
 
 @Injectable({

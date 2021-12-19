@@ -7,7 +7,7 @@ import {catchError, map, Observable, of, throwError} from "rxjs";
   providedIn: 'root'
 })
 export class DeliveryService {
-  private apiUrl = "http://localhost:3000/api/delivery";
+  private apiUrl = "https://gozem-bc.herokuapp.com/api/delivery";
 
   constructor(private http: HttpClient) {
   }
