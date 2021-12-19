@@ -131,6 +131,7 @@ export class AppComponent implements OnInit {
       let lat = position.coords.latitude;
       let lng = position.coords.longitude;
       this.mapCenter = { lat: lat, lng: lng };
+      this.mapMarkers = [];
       this.mapMarkers.push({
         position: {
           lat: lat,

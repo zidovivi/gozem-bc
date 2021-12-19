@@ -113,7 +113,7 @@ export class AppComponent implements OnInit {
   }
 
   private updateDelivery(msg: any) {
-    console.log('ws messages on tracker: ' + JSON.stringify(msg.data));
+    //console.log('ws messages on tracker: ' + JSON.stringify(msg.data));
     if (msg.data?.event && msg.data?.event === 'delivery_updated' && msg.data?.delivery_object && msg.data.delivery_object.delivery_id === this.delivery?.delivery_id) {
       this.delivery = transformToDelivery(msg.data.delivery_object);
       this.refreshMap();
