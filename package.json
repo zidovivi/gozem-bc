@@ -1,6 +1,9 @@
 {
     "name": "gozem-bc",
     "version": "0.1.0",
+    "dependencies": {
+      "@angular/cli": "~13.0.3"
+    },
     "scripts": {
       "postinstall": "npm install --prefix api-server && npm install --prefix web-apps"
     }

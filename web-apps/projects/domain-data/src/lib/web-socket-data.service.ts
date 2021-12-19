@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {webSocket, WebSocketSubject} from "rxjs/webSocket";
 import {catchError, EMPTY, map, Subject, switchAll, tap} from "rxjs";
 
-export const WS_ENDPOINT = "wss://gozem-bc.herokuapp.com/websockets";
+export const WS_ENDPOINT = "ws://localhost:3000/websockets";
 
 @Injectable({
   providedIn: 'root'

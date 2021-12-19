@@ -3,7 +3,7 @@ module.exports = {
   purge: {
     enabled: true,
     content: [
-      './src/**/*.{html,ts}',
+      './projects/driver/src/**/*.{html,ts}',
     ]
   },
   darkMode: 'class', // or 'media' or 'class'

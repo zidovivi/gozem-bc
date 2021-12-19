@@ -50,6 +50,7 @@
     <div id="map" class="w-2/4">
       <google-map height="500px"
                   width="100%"
+                  [zoom]="12"
                   [center]="mapCenter">
         <map-marker
           *ngFor="let marker of mapMarkers"

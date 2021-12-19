@@ -50,9 +50,13 @@
         <h2 class="text-xl font-bold text-red-500">No active delivery!</h2>
       </div>
     </div>
+    <div *ngIf="formSubmitted && !package">
+      <h4 class="text-red-500">No Package found. Please enter a valid package ID.</h4>
+    </div>
     <div id="map" class="w-2/3">
       <google-map height="500px"
                   width="100%"
+                  [zoom]="12"
                   [center]="mapCenter">
         <map-marker
           *ngFor="let marker of mapMarkers"
@@ -61,7 +65,5 @@
       </google-map>
     </div>
   </div>
-  <div *ngIf="formSubmitted && !package">
-    <h4 class="text-red-500">No Package found. Please enter a valid package ID.</h4>
-  </div>
+  
 </div>

@@ -1,9 +1,9 @@
 module.exports = {
   prefix: '',
   purge: {
-    enabled: process.env.NODE_ENV === 'production',
+    enabled: true,
     content: [
-      './src/**/*.{html,ts}',
+      './projects/tracker/src/**/*.{html,ts}',
     ]
   },
   darkMode: 'class', // or 'media' or 'class'

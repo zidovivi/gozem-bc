@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Delivery} from "./gz-common";
-import {catchError, map, Observable, of} from "rxjs";
+import {catchError, map, Observable, of, throwError} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class DeliveryService {
-  private apiUrl = "https://gozem-bc.herokuapp.com/api/delivery";
+  private apiUrl = "http://localhost:3000/api/delivery";
 
   constructor(private http: HttpClient) {
   }
@@ -37,6 +37,7 @@ export class DeliveryService {
     return this.http.get<any>(url)
       .pipe(
         map(d => {
+          if(!d) throw new Error('delivery not found');
           return this.transformToDelivery(d)
         }),
         catchError(this.handleError<Delivery>(`getDelivery id=${delivery_id}`))

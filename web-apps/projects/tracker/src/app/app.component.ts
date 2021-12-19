@@ -3,6 +3,7 @@ import {Delivery, Package, transformToDelivery} from "projects/domain-data/src/l
 import {DeliveryService} from "projects/domain-data/src/lib/delivery.service";
 import {PackageService} from "projects/domain-data/src/lib/package.service";
 import {WebSocketDataService} from "projects/domain-data/src/lib/web-socket-data.service";
+import { DomainDataService } from 'projects/domain-data/src/public-api';
 
 @Component({
   selector: 'app-root',
@@ -22,16 +23,25 @@ export class AppComponent implements OnInit {
 
   constructor(private deliveryService: DeliveryService,
               private packageService: PackageService,
-              private wsDataService: WebSocketDataService) {
+              private wsDataService: WebSocketDataService,
+              private domainSvc: DomainDataService) {
 
   }
 
   ngOnInit(): void {
-
+    this.domainSvc.messages$.subscribe(
+      msg => {
+        this.updateDelivery(msg);
+      }
+    )
   }
 
   onSubmit() {
     this.formSubmitted = true;
+    this.package = undefined;
+    this.delivery = undefined;
+    this.resetMap();
+
     this.packageService.getPackage(this.packageId).subscribe(
       pkg => {
         this.package = pkg;
@@ -40,19 +50,19 @@ export class AppComponent implements OnInit {
             delivery => {
               this.delivery = delivery;
               this.refreshMap();
-              this.wsDataService.dataUpdates$('delivery_id=' + delivery.delivery_id).subscribe(
-                msg => {
-                  this.updateDelivery(msg);
-                }
-              )
-            }
-          );  
+              if(this.delivery)this.domainSvc.connect({queryString: 'delivery_id=' + this.delivery.delivery_id});
+              
+            });  
         }
       }
     );
 
   }
 
+  resetMap() {
+    this.mapCenter = {lat: 0, lng: 0};
+    this.mapMarkers = [];
+  }
   refreshMap() {
     if (this.package && this.delivery) {
       this.mapCenter = {lat: this.delivery.location_lat, lng: this.delivery.location_lng};
@@ -107,6 +117,9 @@ export class AppComponent implements OnInit {
     if (msg.data?.event && msg.data?.event === 'delivery_updated' && msg.data?.delivery_object && msg.data.delivery_object.delivery_id === this.delivery?.delivery_id) {
       this.delivery = transformToDelivery(msg.data.delivery_object);
       this.refreshMap();
+      if (['delivered', 'failed'].includes(this.delivery.status)) {
+        this.domainSvc.close();
+      }
     }
   }
 

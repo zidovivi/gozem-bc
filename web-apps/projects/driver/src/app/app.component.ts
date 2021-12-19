@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {Delivery, Package, transformToDelivery} from "projects/domain-data/src/lib/gz-common";
-import {DeliveryService} from "projects/domain-data/src/lib/delivery.service";
-import {PackageService} from "projects/domain-data/src/lib/package.service";
-import {WebSocketDataService} from "projects/domain-data/src/lib/web-socket-data.service";
+import { Component, OnInit } from '@angular/core';
+import { Delivery, Package, transformToDelivery } from "projects/domain-data/src/lib/gz-common";
+import { DeliveryService } from "projects/domain-data/src/lib/delivery.service";
+import { PackageService } from "projects/domain-data/src/lib/package.service";
+import { WebSocketDataService } from "projects/domain-data/src/lib/web-socket-data.service";
+import { DomainDataService } from 'projects/domain-data/src/public-api';
 
 
 @Component({
@@ -22,24 +23,18 @@ export class AppComponent implements OnInit {
   deliveredButtonEnabled = false;
   failedButtonEnabled = false;
 
-  mapCenter: google.maps.LatLngLiteral = {lat: 0, lng: 0};
+  mapCenter: google.maps.LatLngLiteral = { lat: 0, lng: 0 };
   mapMarkers: google.maps.MarkerOptions[] = [];
 
   constructor(private deliveryService: DeliveryService,
-              private packageService: PackageService,
-              private websocketDataService: WebSocketDataService) {
+    private packageService: PackageService,
+    private websocketDataService: WebSocketDataService,
+    private domainSvc: DomainDataService) {
 
   }
 
   ngOnInit() {
     this.initMap();
-
-    this.websocketDataService.connect('').subscribe(
-      msg => {
-        this.updateDelivery(msg);
-      }
-    )
-
 
     setInterval(() => {
       navigator.geolocation.getCurrentPosition((position) => {
@@ -49,21 +44,40 @@ export class AppComponent implements OnInit {
 
       })
     }, 20000)
+
+    this.domainSvc.messages$.subscribe(
+      msg => {
+        this.updateDelivery(msg);
+      }
+    )
   }
 
 
   onSubmit() {
     this.formSubmitted = true;
+    this.package = undefined;
+    this.delivery = undefined;
+    this.initMap();
     this.deliveryService.getDelivery(this.deliveryId).subscribe(
-      delivery => {
+      (delivery: Delivery) => {
         this.delivery = delivery;
+        /* this.websocketDataService.dataUpdates$('delivery_id=' + delivery.delivery_id)
+        .subscribe(
+          msg => {
+            this.updateDelivery(msg);
+          }
+        ) */
+        if (this.delivery) {
+          this.domainSvc.connect({ queryString: 'delivery_id=' + this.delivery.delivery_id });
 
-        this.updateButtonState(this.delivery.status);
-        this.packageService.getPackage(this.delivery.package_id).subscribe(
-          pkg => {
-            this.package = pkg;
-            this.refreshMap();
-          });
+          this.updateButtonState(this.delivery.status);
+          this.packageService.getPackage(this.delivery.package_id).subscribe(
+            pkg => {
+              this.package = pkg;
+              this.refreshMap();
+            });
+        }
+
       });
 
   }
@@ -73,7 +87,7 @@ export class AppComponent implements OnInit {
     if (this.delivery) {
       this.delivery.status = status;
       this.updateButtonState(status);
-      this.websocketDataService.submitDeliveryStatusChanged(this.delivery.delivery_id, status);
+      this.domainSvc.submitDeliveryStatusChanged(this.delivery.delivery_id, status);
     }
   }
 
@@ -116,7 +130,7 @@ export class AppComponent implements OnInit {
     navigator.geolocation.getCurrentPosition((position) => {
       let lat = position.coords.latitude;
       let lng = position.coords.longitude;
-      this.mapCenter = {lat: lat, lng: lng};
+      this.mapCenter = { lat: lat, lng: lng };
       this.mapMarkers.push({
         position: {
           lat: lat,
@@ -185,21 +199,24 @@ export class AppComponent implements OnInit {
   }
 
   updateDeliveryLocation(lat: number, lng: number) {
-    console.log('Calling updateDeliveryLocation with lat:' + lat + ' lng:' + lng);
     if (this.delivery && this.delivery.status !== 'delivered' && this.delivery.status !== 'failed') { // omits when delivered or failed
       this.delivery.location_lng = lat;
       this.delivery.location_lat = lng;
-      this.websocketDataService.submitDeliveryLocationChanged(this.delivery.delivery_id, lat, lng);
+      console.log('Updating delivery location with lat:' + lat + ' lng:' + lng);
+      this.domainSvc.submitDeliveryLocationChanged(this.delivery.delivery_id, lat, lng);
     }
   }
 
   private updateDelivery(msg: any) {
-    console.log('ws messages on driver: ' + JSON.stringify(msg.data));
+    //console.log('ws messages on driver: ' + JSON.stringify(msg.data));
     console.log(msg.data?.event);
     if (msg.data?.event && msg.data?.event === 'delivery_updated' && msg.data?.delivery_object && msg.data.delivery_object.delivery_id === this.delivery?.delivery_id) {
       this.delivery = transformToDelivery(msg.data.delivery_object);
       this.updateButtonState(this.delivery.status);
       this.refreshMap();
+      if (['delivered', 'failed'].includes(this.delivery.status)) {
+        this.domainSvc.close();
+      }
     }
   }
 }
