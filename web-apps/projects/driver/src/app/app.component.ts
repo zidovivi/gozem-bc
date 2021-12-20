@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Delivery, Package, transformToDelivery } from "projects/domain-data/src/lib/gz-common";
 import { DeliveryService } from "projects/domain-data/src/lib/delivery.service";
 import { PackageService } from "projects/domain-data/src/lib/package.service";
-import { WebSocketDataService } from "projects/domain-data/src/lib/web-socket-data.service";
 import { DomainDataService } from 'projects/domain-data/src/public-api';
 
 
@@ -10,7 +9,6 @@ import { DomainDataService } from 'projects/domain-data/src/public-api';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [WebSocketDataService]
 })
 export class AppComponent implements OnInit {
   delivery?: Delivery;
@@ -28,7 +26,6 @@ export class AppComponent implements OnInit {
 
   constructor(private deliveryService: DeliveryService,
     private packageService: PackageService,
-    private websocketDataService: WebSocketDataService,
     private domainSvc: DomainDataService) {
 
   }
@@ -61,12 +58,7 @@ export class AppComponent implements OnInit {
     this.deliveryService.getDelivery(this.deliveryId).subscribe(
       (delivery: Delivery) => {
         this.delivery = delivery;
-        /* this.websocketDataService.dataUpdates$('delivery_id=' + delivery.delivery_id)
-        .subscribe(
-          msg => {
-            this.updateDelivery(msg);
-          }
-        ) */
+        
         if (this.delivery) {
           this.domainSvc.connect({ queryString: 'delivery_id=' + this.delivery.delivery_id });
 
@@ -209,7 +201,7 @@ export class AppComponent implements OnInit {
   }
 
   private updateDelivery(msg: any) {
-    //console.log('ws messages on driver: ' + JSON.stringify(msg.data));
+    console.log('ws messages on driver: ' + JSON.stringify(msg));
     console.log(msg.data?.event);
     if (msg.data?.event && msg.data?.event === 'delivery_updated' && msg.data?.delivery_object && msg.data.delivery_object.delivery_id === this.delivery?.delivery_id) {
       this.delivery = transformToDelivery(msg.data.delivery_object);

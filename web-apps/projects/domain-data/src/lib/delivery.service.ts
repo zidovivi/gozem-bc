@@ -7,7 +7,7 @@ import {catchError, map, Observable, of, throwError} from "rxjs";
   providedIn: 'root'
 })
 export class DeliveryService {
-  private apiUrl = "https://gozem-bc.herokuapp.com/api/delivery";
+  private apiUrl = "http://localhost:3000/api/delivery";
 
   constructor(private http: HttpClient) {
   }
@@ -28,7 +28,7 @@ export class DeliveryService {
         map(d => {
           return this.transformToDelivery(d)
         }),
-        catchError(this.handleError<Delivery>('addPackage'))
+        catchError(this.handleError<Delivery>('addDelivery'))
       );
   }
 
@@ -48,6 +48,7 @@ export class DeliveryService {
     return (error: any): Observable<T> => {
       // TODO: send the error to remote logging infrastructure
       console.error(error);
+      if(error.status === 404) throw new Error(`${operation}, not found`);
       return of(result as T);
     };
   }

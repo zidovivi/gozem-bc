@@ -2,14 +2,12 @@ import {Component, OnInit} from '@angular/core';
 import {Delivery, Package, transformToDelivery} from "projects/domain-data/src/lib/gz-common";
 import {DeliveryService} from "projects/domain-data/src/lib/delivery.service";
 import {PackageService} from "projects/domain-data/src/lib/package.service";
-import {WebSocketDataService} from "projects/domain-data/src/lib/web-socket-data.service";
 import { DomainDataService } from 'projects/domain-data/src/public-api';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  providers: [WebSocketDataService]
 })
 export class AppComponent implements OnInit {
   title = 'tracker';
@@ -23,7 +21,6 @@ export class AppComponent implements OnInit {
 
   constructor(private deliveryService: DeliveryService,
               private packageService: PackageService,
-              private wsDataService: WebSocketDataService,
               private domainSvc: DomainDataService) {
 
   }
